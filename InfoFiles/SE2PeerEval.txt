@@ -1,0 +1,35 @@
+This peeer evaluation is specifically the evaluation of fellow team members. 
+
+Input will assumed to be a basic CSV Document. 
+What does the CSV Input look like? 
+- User1		User2 		Question	Answer
+- Guy		Gal		1		5 
+- Gal		Guy		3		4	<--*
+input assumes question 1 from a document and the answer on a likert is a 5 
+User1 is rating User2
+
+
+*csv could require that each person rates the other in order of questions or allow jumping around
+the input could also fail if a required question was not taken. 
+
+For instance, if we say that Guy has rated Gal on question one and gal rates guy one other questions that are not one. we can decide the input is invalid or require it in another way. 
+
+
+Filename could be important for ensuring we take in correct CSVs
+What is within an Eval?	
+- ID
+- Name? 
+- Date? 
+- Each line in the csv could contain a foreign key that connects to a database/its    own id
+
+Basic Database layout? //not actually making a database btw
+course --* section
+section --* eval
+this could be replaced with departments and teams
+
+Each CSV most likely represents the evaluation between the peers of people in a single team. 
+
+Another example that idk what it was but it seems like a database table idea
+- Name		Team		EvalID
+- Guy		Purple		17
+- Gal		White		4
