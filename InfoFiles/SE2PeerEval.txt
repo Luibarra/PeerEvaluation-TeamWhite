@@ -1,6 +1,6 @@
 This peeer evaluation is specifically the evaluation of fellow team members. 
 
-Input will assumed to be a basic CSV Document. 
+Input assumed to be a basic CSV Document. 
 What does the CSV Input look like? 
 - User1		User2 		Question	Answer
 - Guy		Gal		1		5 
