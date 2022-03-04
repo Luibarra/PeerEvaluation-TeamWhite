@@ -12,7 +12,7 @@ User1 is rating User2
 *csv could require that each person rates the other in order of questions or allow jumping around
 the input could also fail if a required question was not taken. 
 
-For instance, if we say that Guy has rated Gal on question one and gal rates guy one other questions that are not one. we can decide the input is invalid or require it in another way. 
+For instance, if we say that Guy has rated Gal on question one and gal rates guy on other questions that are not one. we can decide the input is invalid or require it in another way. 
 
 
 Filename could be important for ensuring we take in correct CSVs
