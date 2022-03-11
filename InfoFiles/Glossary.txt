@@ -1,2 +1,54 @@
 Glossary of Terms
 
+Nouns
+
+Evaluation
+The form that the user will “fill out” (see definition of “Fill Out” in verb section)
+
+Survey
+Another word for form for the user
+
+Rating
+User’s opinion for a certain “question”
+
+Team
+The group in which the user is answering the “questions” about.
+
+Team Member
+A specific person in the “team” that the user will answer “questions” about
+
+Due Date
+The date that can be assigned to a “evaluation”/”survey” in which a user must submit it by
+
+Question
+Statements where users will give their “rating” in response to their “team” and “team members”
+
+Instrument
+A device for measuring a user’s “ratings”
+
+Scale
+The framework in which the user will be allowed to give their “ratings” for a given “question”
+
+
+
+Verbs
+
+Deploy
+Publishing the “evaluation” in order for it to be sent out
+
+Distribute
+Assigning the “evaluation” to be “filled out” by users
+
+Fill Out
+The action of the user giving their response to all the “questions” on the “evaluation”
+
+Complete
+When a user finishes “filling out” the “evaluation” by answering all the “questions”
+
+Rate
+The action of the user giving their “rating”
+
+P0wn
+The action of destroying n00bs
+
+
