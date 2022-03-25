@@ -4,6 +4,12 @@
  */
 import java.io.* ;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 
 public class PeerEvaluation 
@@ -39,6 +45,21 @@ public class PeerEvaluation
        
     return table; 
   }
+
+  public Connection getConnection() throws SQLException {
+
+    Connection conn = null;
+    Properties connectionProps = new Properties();
+    connectionProps.put("user", "postgres");
+    connectionProps.put("password", "Spartan7624$$");
+
+    conn = DriverManager.getConnection(
+                   "jdbc:postgresql:CS375v1;create=true",
+                   connectionProps);
+    
+    System.out.println("Connected to database");
+    return conn;
+}
 }
 
 
