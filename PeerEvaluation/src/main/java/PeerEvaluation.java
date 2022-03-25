@@ -53,9 +53,8 @@ public class PeerEvaluation
     connectionProps.put("user", "postgres");
     connectionProps.put("password", "Spartan7624$$");
 
-    conn = DriverManager.getConnection(
-                   "jdbc:postgresql:CS375v1;create=true",
-                   connectionProps);
+    String url = "jdbc:postgresql://localhost:5432/CS735v1"; 
+    conn = DriverManager.getConnection(url, connectionProps);
     
     System.out.println("Connected to database");
     return conn;

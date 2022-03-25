@@ -13,32 +13,32 @@ public class PeerEvaluationTest
     {
       try {
         PeerEvaluation PeerEval = new PeerEvaluation();
-        System.out.println(PeerEval.getConnection());
+        PeerEval.getConnection();
       } 
 
       catch (Exception e) {
-        //System.out.println("test fail tho");
+        System.out.println("test fail tho");
       }
     }
   
-    // @Test
-    // public void testColumnNames() 
-    // {
-    // 	try {
-    //     PeerEvaluation PeerEval = new PeerEvaluation(); 
-    //     String[][] table = PeerEval.parseCSV("evals.csv");
+    @Test
+    public void testColumnNames() 
+    {
+    	try {
+        PeerEvaluation PeerEval = new PeerEvaluation(); 
+        String[][] table = PeerEval.parseCSV("evals.csv");
 
-    //     //check that column names are what they should be 
-    //     assertEquals("evaluation-id", table[0][0]);
-    //     assertEquals("rator-id", table[0][1].replaceAll("\\s+",""));
-    //     assertEquals("ratee-id", table[0][2].replaceAll("\\s+",""));
-    //     assertEquals("question-id", table[0][3].replaceAll("\\s+",""));
-		//   } 
+        //check that column names are what they should be 
+        assertEquals("evaluation-id", table[0][0]);
+        assertEquals("rator-id", table[0][1].replaceAll("\\s+",""));
+        assertEquals("ratee-id", table[0][2].replaceAll("\\s+",""));
+        assertEquals("question-id", table[0][3].replaceAll("\\s+",""));
+		  } 
 	
-    //   catch (Exception e) {
-    //     System.out.println("test fail tho");
-    //   }
-    // }
+      catch (Exception e) {
+        System.out.println("test fail tho");
+      }
+    }
 
     // @Test
     // public void testRatings() 
