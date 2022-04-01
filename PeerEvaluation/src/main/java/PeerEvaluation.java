@@ -93,11 +93,11 @@ public class PeerEvaluation
         if(sc.hasNext()){
           String st = sc.next(); 
           table[i][j] = st; 
-          // System.out.print(" " + st);    //printing out csv info
+          //System.out.print(" " + st);    //printing out csv info
         }
       }
     }
-    System.out.println();
+    //System.out.println();
 
     sc.close();   //closes the scanner 
        
