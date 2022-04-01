@@ -34,6 +34,20 @@ Attribute3 varchar(255),
 Selected boolean
 );
 
+CREATE TABLE Response(
+evalID int, 
+Student1 int, 
+Student2 int,
+Category char, 
+Val int 
+);
+
+CREATE TABLE Teams(
+evalID int, 
+teamID int, 
+student int
+);
+
 INSERT INTO TeamContribution (levelID, Attribute1, Attribute2, Attribute3, Selected)
 VALUES ('1', 'Does more or higher-quality work than expected', ' Makes important contributions that improve the teams work.', 'Helps teammates who are having difficulty completing their work.', '0');
 INSERT INTO TeamContribution (levelID, Attribute1, Attribute2, Attribute3, Selected)
