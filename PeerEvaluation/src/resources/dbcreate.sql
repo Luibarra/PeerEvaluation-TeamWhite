@@ -38,8 +38,8 @@ CREATE TABLE Response(
 evalID int, 
 Student1 int, 
 Student2 int,
-Category char, 
-Val int 
+Category char(3), 
+val int 
 );
 
 CREATE TABLE Teams(
@@ -47,6 +47,14 @@ evalID int,
 teamID int, 
 student int
 );
+
+CREATE VIEW v_response AS 
+SELECT evalID, Student1, Student2, Category, val
+FROM Response; 
+
+CREATE VIEW v_teams AS 
+SELECT evalID, teamID, student 
+FROM Teams; 
 
 INSERT INTO TeamContribution (levelID, Attribute1, Attribute2, Attribute3, Selected)
 VALUES ('1', 'Does more or higher-quality work than expected', ' Makes important contributions that improve the teams work.', 'Helps teammates who are having difficulty completing their work.', '0');

@@ -1,7 +1,3 @@
-/**
- *
- *
- */
 import java.io.* ;
 import java.util.Scanner;
 import java.sql.Connection;
@@ -87,7 +83,7 @@ public class PeerEvaluation
     String[][] table = new String[100][100]; 
 
     //parsing a CSV file into the constructor of Scanner class 
-    Scanner sc = new Scanner(new File(input));
+    Scanner sc = new Scanner(new File(input)); 
     
     //setting comma as delimiter pattern
     sc.useDelimiter(",");
