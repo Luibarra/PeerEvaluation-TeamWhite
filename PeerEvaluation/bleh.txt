@@ -1,1 +1,0 @@
-DATABASE_URL_LOCAL= "postgresql://postgres:Spartan7624$$@localhost:5432/CS375v1"
