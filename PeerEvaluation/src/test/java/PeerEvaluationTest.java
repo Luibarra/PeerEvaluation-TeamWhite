@@ -13,15 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- *
+ * 
  */
 
 public class PeerEvaluationTest
 {
-    @Test
-    public void testDBConnection()
-    {
-      try {
   public static PeerEvaluation pc;
   public static Connection c;
 
@@ -38,8 +34,33 @@ public class PeerEvaluationTest
    System.out.println("all done");
   }
 
+  public void response_inserts(){
+    try {
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String table[][] = PeerEval.parseCSV("evals.csv");
+
+      for(int j = 1; j < 5; j++){
+        String insert = "INSERT INTO Response (evalID, Student1, Student2, Category, val) VALUES ("; 
+        for(int i = 0; i < 5; i++){
+          if(i == 4){
+            insert = insert + "'" + table[1][0] + "'"; 
+          }
+          else
+          {
+            insert = insert + "'" + table[1][0] + "', "; 
+            
+          }
+        }
+        insert = insert + ");";
+        System.out.println(insert); 
+      }
+    } catch (Exception e) {
+      System.out.println("response insert error");
+    }
+  }
+
   public void interacting_delete() {
-    pc.nonquery("delete from interacting");
+    pc.nonquery("delete from interacting"); 
   }
 
   public void interacting_inserts() {
@@ -71,7 +92,12 @@ public class PeerEvaluationTest
     }
 
     return n;
-  }
+  } 
+
+  // @Test 
+  // public void check_response_insert(){
+  //   response_inserts();
+  // }
 
   @Test
   public void check_delete () {
@@ -89,27 +115,8 @@ public class PeerEvaluationTest
     interacting_inserts();
     n = count_rows("Interacting");
     assertEquals("should now be 1", 1, n);
-    System.out.print("insert from code functioning...");
+    System.out.println("insert from code functioning...");
   }    
-  
-  @Test
-  public void testColumnNames() 
-  {
-    try {
-      PeerEvaluation PeerEval = new PeerEvaluation(); 
-      String[][] table = PeerEval.parseCSV("evals.csv");
-
-      //check that column names are what they should be 
-      assertEquals("evaluation-id", table[0][0]);
-      assertEquals("rator-id", table[0][1].replaceAll("\\s+",""));
-      assertEquals("ratee-id", table[0][2].replaceAll("\\s+",""));
-      assertEquals("question-id", table[0][3].replaceAll("\\s+",""));
-    } 
-
-    catch (Exception e) {
-      System.out.println("test fail tho");
-    }
-  }
 
   // *************************************************************************
   //                          Main Test Section 
@@ -127,7 +134,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("error in columnname1");
     }
   }
 
@@ -142,7 +149,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -157,7 +164,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }  
 
@@ -172,7 +179,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -192,7 +199,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -220,7 +227,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -237,7 +244,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -253,7 +260,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -269,7 +276,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -285,7 +292,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -302,7 +309,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -316,7 +323,7 @@ public class PeerEvaluationTest
   }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -329,7 +336,7 @@ public class PeerEvaluationTest
       assertTrue(Integer.parseInt(table[2][3]) == 2);
     }
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -342,7 +349,7 @@ public class PeerEvaluationTest
       assertTrue(Integer.parseInt(table[2][4]) == 2);
     }
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -357,7 +364,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -371,7 +378,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -384,7 +391,7 @@ public class PeerEvaluationTest
       assertTrue(Integer.parseInt(table[3][3]) == 3);
     }
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -400,7 +407,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -417,7 +424,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -433,7 +440,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -449,7 +456,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -465,7 +472,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -482,7 +489,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -498,7 +505,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -514,7 +521,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -530,7 +537,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -550,7 +557,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -569,7 +576,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 
@@ -588,7 +595,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.println("");
+      System.out.print("");
     }
   }
 }
