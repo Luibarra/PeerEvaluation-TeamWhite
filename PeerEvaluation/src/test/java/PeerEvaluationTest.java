@@ -25,7 +25,7 @@ public class PeerEvaluationTest
   public static void setUpDB() throws Exception {
     System.out.println("connecting...");
     pc = new PeerEvaluation();
-    c = pc.connect("jdbc:postgresql://localhost:5432/cs375v1", "mrblee", "purplewhite");
+    c = pc.connect("jdbc:postgresql://localhost:5432/cs375v1", "postgres", "Spartan7624$$");
   }
 
   @AfterClass
@@ -34,37 +34,13 @@ public class PeerEvaluationTest
    System.out.println("all done");
   }
 
-  public void response_inserts(){
-    try {
-      PeerEvaluation PeerEval = new PeerEvaluation();
-      String table[][] = PeerEval.parseCSV("evals.csv");
-
-      for(int j = 1; j < 5; j++){
-        String insert = "INSERT INTO Response (evalID, Student1, Student2, Category, val) VALUES ("; 
-        for(int i = 0; i < 5; i++){
-          if(i == 4){
-            insert = insert + "'" + table[1][0] + "'"; 
-          }
-          else
-          {
-            insert = insert + "'" + table[1][0] + "', "; 
-            
-          }
-        }
-        insert = insert + ");";
-        System.out.println(insert); 
-      }
-    } catch (Exception e) {
-      System.out.println("response insert error");
-    }
+  //need to create dummy table for interaction tests
+  public void response_delete() {
+    pc.nonquery("delete from response"); 
   }
 
-  public void interacting_delete() {
-    pc.nonquery("delete from interacting"); 
-  }
-
-  public void interacting_inserts() {
-    String insert = "INSERT INTO Interacting (levelID, Attribute1, Attribute2, Attribute3, Selected) VALUES ('1', 'Asks for and shows an interest in teammates ideas and contributions.', 'Makes sure teammates stay informed and understand each other.', 'Provides encouragement or enthusiasm to the team.', '0');"; 
+  public void response_inserts() {
+    String insert = "INSERT INTO Response (evalID,Student1,Student2,Category,Val) VALUES (1906, 45, 46, 'T', 9);"; 
     pc.nonquery(insert);
   }
         
@@ -94,26 +70,21 @@ public class PeerEvaluationTest
     return n;
   } 
 
-  // @Test 
-  // public void check_response_insert(){
-  //   response_inserts();
-  // }
-
   @Test
   public void check_delete () {
     int n = -1;
-    interacting_delete();
-    n = count_rows("Interacting");
-    assertEquals("Interacting table should be empty", 0, n);
+    response_delete();
+    n = count_rows("Response");
+    assertEquals("Response table should be empty", 0, n);
     System.out.print("delete from code functioning...");
   }
 
   @Test
   public void check_inserts () {
     int n = -1;
-    interacting_delete();
-    interacting_inserts();
-    n = count_rows("Interacting");
+    response_delete();
+    response_inserts();
+    n = count_rows("Response");
     assertEquals("should now be 1", 1, n);
     System.out.println("insert from code functioning...");
   }    
