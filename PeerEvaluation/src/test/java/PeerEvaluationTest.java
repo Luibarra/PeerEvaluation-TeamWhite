@@ -25,7 +25,7 @@ public class PeerEvaluationTest
   public static void setUpDB() throws Exception {
     System.out.println("connecting...");
     pc = new PeerEvaluation();
-    c = pc.connect("jdbc:postgresql://localhost:5432/cs375v1", "postgres", "Spartan7624$$");
+    c = pc.connect("jdbc:postgresql://localhost:5432/cs375v1", "mrblee", "purplewhite");
   }
 
   @AfterClass

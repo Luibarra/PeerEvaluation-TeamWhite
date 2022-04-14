@@ -63,6 +63,12 @@ CREATE VIEW v_teams AS
 SELECT evalID, teamID, student 
 FROM Teams; 
 
+GRANT ALL ON Response TO mrblee; 
+GRANT ALL ON Teams TO mrblee; 
+GRANT ALL ON Students TO mrblee; 
+GRANT ALL ON v_response TO mrblee; 
+GRANT ALL ON v_teams TO mrblee; 
+
 -- Students Inserts
 insert into students (id,name) values ( 1,'StudentA');
 insert into students (id,name) values ( 2,'StudentB');
