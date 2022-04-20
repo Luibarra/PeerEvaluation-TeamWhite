@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 /**
  * 
  */
@@ -105,7 +107,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.print("error in columnname1");
+      System.out.println("(error in columnname1)");
     }
   }
 
@@ -116,11 +118,11 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertEquals("rator-id", table[0][1].replaceAll("\\s+",""));
+      assertEquals("student1", table[0][1]);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(error in columnname2)");
     }
   }
 
@@ -131,11 +133,11 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertEquals("ratee-id", table[0][2].replaceAll("\\s+",""));
+      assertEquals("student2", table[0][2]);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(error in columnname3)");
     }
   }  
 
@@ -146,11 +148,26 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertEquals("question-id", table[0][3].replaceAll("\\s+",""));
+      assertEquals("category", table[0][3]);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(error in column4)");
+    }
+  }
+
+  @Test
+  public void testColumnName5()
+  {
+    try {
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      assertEquals("value", table[0][4]);
+    }
+
+    catch (Exception e) {
+      System.out.println("(error in column5)");
     }
   }
 
@@ -170,7 +187,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(TestRatings error)");
     }
   }
 
@@ -198,7 +215,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(testEvalPair error)");
     }
   }
 
@@ -215,7 +232,7 @@ public class PeerEvaluationTest
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRaterID1 error)");
     }
   }
 
@@ -227,11 +244,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[1][2]) == 3);
+      assertTrue(Integer.parseInt(table[2][1]) == 3);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRaterID2 error)");
     }
   }
 
@@ -243,11 +260,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[1][3]) == 3);
+      assertTrue(Integer.parseInt(table[3][1]) == 3);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRaterID3 error)");
     }
   }
 
@@ -259,11 +276,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[1][4]) == 3);
+      assertTrue(Integer.parseInt(table[3][1]) == 3);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRaterID4 error)");
     }
   }
 
@@ -276,11 +293,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[2][1]) == 2);
+      assertTrue(Integer.parseInt(table[1][2]) == 2);
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRatee1 error)");
     }
   }
 
@@ -294,7 +311,7 @@ public class PeerEvaluationTest
   }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRatee2 error)");
     }
   }
 
@@ -304,10 +321,10 @@ public class PeerEvaluationTest
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-      assertTrue(Integer.parseInt(table[2][3]) == 2);
+      assertTrue(Integer.parseInt(table[3][2]) == 2);
     }
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRatee3 error)");
     }
   }
 
@@ -317,68 +334,67 @@ public class PeerEvaluationTest
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-      assertTrue(Integer.parseInt(table[2][4]) == 2);
+      assertTrue(Integer.parseInt(table[4][2]) == 2);
     }
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRatee4 error)");
     }
   }
 
-  //Verify that all Question columns in table array match "evals.csv"
+  //Verify that all Category columns in table array match "evals.csv"
   @Test
-  public void verifyQuestion1()
+  public void verifyCategory1()
   {
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-      assertTrue(Integer.parseInt(table[3][1]) == 1);
+      assertTrue(table[1][3].equals("C"));
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vCat1 error");
     }
   }
 
   @Test
-  public void verifyQuestion2()
+  public void verifyCategory2()
   {
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-      assertTrue(Integer.parseInt(table[3][2]) == 2);
+      assertTrue(table[2][3].equals("I"));
     }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vCat2 error");
     }
   }
 
   @Test
-  public void verifyQuestion3()
+  public void verifyCategory3()
   {
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-      assertTrue(Integer.parseInt(table[3][3]) == 3);
+      assertTrue(table[3][3].equals("K"));
     }
+
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vCat3 error");
     }
   }
 
   @Test
-  public void verifyQuestion4()
+  public void verifyCategory4()
   {
     try {
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
-
-
-      assertTrue(Integer.parseInt(table[3][4]) == 4);
-   }
+      assertTrue(table[4][3].equals("E"));
+    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vCat4 error");
     }
   }
 
@@ -391,11 +407,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[4][1]) == 3);
+      assertTrue(Integer.parseInt(table[1][4]) == 3);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vVal1 error)");
     }
   }
 
@@ -407,11 +423,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[4][2]) == 1);
+      assertTrue(Integer.parseInt(table[2][4]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vVal2 error)");
     }
   }
 
@@ -423,11 +439,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[4][3]) == 4);
+      assertTrue(Integer.parseInt(table[3][4]) == 4);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vVal3 error)");
     }
   }
 
@@ -443,7 +459,7 @@ public class PeerEvaluationTest
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vVal4 error)");
     }
   }
 
@@ -456,11 +472,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[0][1]) == 1);
+      assertTrue(Integer.parseInt(table[1][0]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vRowEval error");
     }
   }
 
@@ -472,11 +488,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[0][2]) == 1);
+      assertTrue(Integer.parseInt(table[2][0]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vRowEval2 error");
     }
   }
 
@@ -488,11 +504,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[0][3]) == 1);
+      assertTrue(Integer.parseInt(table[3][0]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vRowEval3 error");
     }
   }
 
@@ -504,11 +520,11 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[0][4]) == 1);
+      assertTrue(Integer.parseInt(table[4][0]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("vRowEval4 error");
     }
   }
 
@@ -520,15 +536,15 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[0][1]) == 1);
+      assertTrue(Integer.parseInt(table[1][0]) == 1);
       assertTrue(Integer.parseInt(table[1][1]) == 3);
-      assertTrue(Integer.parseInt(table[2][1]) == 2);
-      assertTrue(Integer.parseInt(table[3][1]) == 1);
-      assertTrue(Integer.parseInt(table[4][1]) == 3);
+      assertTrue(Integer.parseInt(table[1][2]) == 2);
+      assertTrue(table[1][3].equals("C"));
+      assertTrue(Integer.parseInt(table[1][4]) == 3);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRows1 error)");
     }
   }
 
@@ -539,15 +555,15 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[0][2]) == 1);
-      assertTrue(Integer.parseInt(table[1][2]) == 3);
+      assertTrue(Integer.parseInt(table[2][0]) == 1);
+      assertTrue(Integer.parseInt(table[2][1]) == 3);
       assertTrue(Integer.parseInt(table[2][2]) == 2);
-      assertTrue(Integer.parseInt(table[3][2]) == 2);
-      assertTrue(Integer.parseInt(table[4][2]) == 1);
+      assertTrue(table[2][3].equals("I"));
+      assertTrue(Integer.parseInt(table[2][4]) == 1);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRows2 error)");
     }
   }
 
@@ -558,15 +574,15 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[0][3]) == 1);
-      assertTrue(Integer.parseInt(table[1][3]) == 3);
-      assertTrue(Integer.parseInt(table[2][3]) == 2);
-      assertTrue(Integer.parseInt(table[3][3]) == 3);
-      assertTrue(Integer.parseInt(table[4][3]) == 4);
+      assertTrue(Integer.parseInt(table[3][0]) == 1);
+      assertTrue(Integer.parseInt(table[3][1]) == 3);
+      assertTrue(Integer.parseInt(table[3][2]) == 2);
+      assertTrue(table[3][3].equals("K"));
+      assertTrue(Integer.parseInt(table[3][4]) == 4);
    }
 
     catch (Exception e) {
-      System.out.print("");
+      System.out.println("(vRows3 error)");
     }
   }
 }

@@ -47,6 +47,7 @@ public class PeerEvaluation
     try {
         PreparedStatement pstmt = c.prepareStatement(inQuery);
         rs = pstmt.executeQuery();
+        System.out.println(rs); 
     }  
     catch(Exception e) {
       if (! ("No results were returned by the query.".equals(e.getMessage()))) 
@@ -80,7 +81,8 @@ public class PeerEvaluation
   // Parse CSV Function     
   public String[][] parseCSV(String input) throws Exception 
   {
-    String[][] table = new String[100][100]; 
+    String[][] table = new String[100][5]; //may still need to be made dynamic size
+    String[] splitLine = new String[5];      //length of row is always the same
 
     //parsing a CSV file into the constructor of Scanner class 
     Scanner sc = new Scanner(new File(input)); 
@@ -88,22 +90,31 @@ public class PeerEvaluation
     //setting comma as delimiter pattern
     sc.useDelimiter(",");
 
-    for(int i = 0; i < 100; i++){
-      for(int j = 0; j < 100; j++){
-        if(sc.hasNext()){
-          String st = sc.next(); 
-          table[i][j] = st; 
-          //System.out.print(" " + st);    //printing out csv info
-        }
-      }
+    int i = 0; 
+    while(sc.hasNextLine()){
+      String st = sc.nextLine(); //take line and split into tokens in another array for each row 
+      splitLine = st.split(","); 
+      //System.out.print("["+st+"]");   //debug: shows each line in brackets
+
+      // System.out.print("{");   //debug: shows each row array, braces outling the array
+      for(int j = 0; j < 5;j++){
+          table[i][j] = splitLine[j]; 
+          // System.out.print("["+table[i][j]+"]"); //debug: brackets outline variables
+      }  
+      // System.out.print("}");
+      // System.out.println(); 
+
+      i++;
     }
-    //System.out.println();
 
     sc.close();   //closes the scanner 
        
     return table; 
   }
 
+  //
+  // this may never be used but idk if i should delete it
+  //
   // public Connection getConnection() throws SQLException {
 
   //   Connection conn = null;
