@@ -140,6 +140,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -162,6 +163,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -184,6 +186,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -206,6 +209,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -228,6 +232,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -250,6 +255,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       String student1 = table[1][1];
@@ -273,6 +279,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       String student2 = table[1][2];
@@ -296,6 +303,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -318,6 +326,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -340,6 +349,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -362,6 +372,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){
@@ -384,6 +395,7 @@ public class PeerEvaluationTest
     try{
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
       int catcount = 0; 
       for(int i = 1; i < table.length;i++){

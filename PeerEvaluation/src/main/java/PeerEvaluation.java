@@ -96,13 +96,13 @@ public class PeerEvaluation
       splitLine = st.split(","); 
       //System.out.print("["+st+"]");   //debug: shows each line in brackets
 
-      // System.out.print("{");   //debug: shows each row array, braces outling the array
+       //System.out.print("{");   //debug: shows each row array, braces outling the array
       for(int j = 0; j < 5;j++){
           table[i][j] = splitLine[j]; 
-          // System.out.print("["+table[i][j]+"]"); //debug: brackets outline variables
+           //System.out.print("["+table[i][j]+"]"); //debug: brackets outline variables
       }  
-      // System.out.print("}");
-      // System.out.println(); 
+      //System.out.print("}");
+      //System.out.println(); 
 
       i++;
     }
