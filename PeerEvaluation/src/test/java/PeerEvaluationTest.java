@@ -135,6 +135,272 @@ public class PeerEvaluationTest
     }
   }
 
+  @Test
+  public void CatC(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(table[i][3].equals("C")){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where category='C'and evalid=2");
+      assertEquals("count of C responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CatC DB test error)");
+    }
+  }
+
+  @Test
+  public void CatI(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(table[i][3].equals("I")){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where category='I'and evalid=2");
+      assertEquals("count of I responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CatI DB test error)");
+    }
+  }
+
+  @Test
+  public void CatK(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(table[i][3].equals("K")){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where category='K'and evalid=2");
+      assertEquals("count of K responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CatK DB test error)");
+    }
+  }
+
+  @Test
+  public void CatE(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(table[i][3].equals("E")){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where category='E'and evalid=2");
+      assertEquals("count of E responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CatE DB test error)");
+    }
+  }
+
+  @Test
+  public void CatH(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(table[i][3].equals("H")){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where category='H'and evalid=2");
+      assertEquals("count of H responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CatH DB test error)");
+    }
+  }
+
+  @Test
+  public void CheckStudent1(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      String student1 = table[1][1];
+      for(int i = 1; i < table.length;i++){
+        if(table[i][1].equals(student1)){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where student1="+student1+" and evalid=2");
+      assertEquals("count of student1 responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CheckStudent1 DB test error)");
+    }
+  }
+
+  @Test
+  public void CheckStudent2(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      String student2 = table[1][2];
+      for(int i = 1; i < table.length;i++){
+        if(table[i][2].equals(student2)){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where student2="+student2+" and evalid=2");
+      assertEquals("count of student2 responses from eval 2 should equal",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(CheckStudent2 DB test error)");
+    }
+  }
+
+  @Test
+  public void ValueInput1(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(Integer.parseInt(table[i][4]) == 1){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where val=1 and evalid=2");
+      assertEquals("count of eval 2 responses of 1",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(ValueInput1 DB test error)");
+    }
+  }
+
+  @Test
+  public void ValueInput2(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(Integer.parseInt(table[i][4]) == 2){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where val=2 and evalid=2");
+      assertEquals("count of eval 2 responses of 2",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(ValueInput2 DB test error)");
+    }
+  }
+
+  @Test
+  public void ValueInput3(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(Integer.parseInt(table[i][4]) == 3){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where val=3 and evalid=2");
+      assertEquals("count of eval 2 responses of 3",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(ValueInput3 DB test error)");
+    }
+  }
+
+  @Test
+  public void ValueInput4(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(Integer.parseInt(table[i][4]) == 4){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where val=4 and evalid=2");
+      assertEquals("count of eval 2 responses of 4",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(ValueInput4 DB test error)");
+    }
+  }
+
+  @Test
+  public void ValueInput5(){
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+
+      int catcount = 0; 
+      for(int i = 1; i < table.length;i++){
+        if(Integer.parseInt(table[i][4]) == 5){
+          catcount++; 
+        }
+      }
+      
+      int n = -1; 
+      n = count_rows("response where val=5 and evalid=2");
+      assertEquals("count of eval 2 responses of 5",catcount,n); 
+    }
+    catch (Exception e){
+      System.out.println("(ValueInput5 DB test error)");
+    }
+  }
+
   //Test that column names are what they should be
   @Test
   public void testColumnName1()
