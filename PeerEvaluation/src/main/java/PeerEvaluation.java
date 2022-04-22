@@ -81,7 +81,7 @@ public class PeerEvaluation
   // Parse CSV Function     
   public String[][] parseCSV(String input) throws Exception 
   {
-    String[][] table = new String[100][5]; //may still need to be made dynamic size
+    String[][] table = new String[10000][5]; //may still need to be made dynamic size
     String[] splitLine = new String[5];      //length of row is always the same
 
     //parsing a CSV file into the constructor of Scanner class 
@@ -107,9 +107,17 @@ public class PeerEvaluation
       i++;
     }
 
+    //array being returned is resized 
+    String[][] newSize = new String[i][5]; 
+    for(int j = 0; j < newSize.length;j++){
+      for(int k = 0; k < 5; k++){
+        newSize[j][k] = table[j][k]; 
+      }
+    }
+
     sc.close();   //closes the scanner 
        
-    return table; 
+    return newSize; 
   }
 
   //

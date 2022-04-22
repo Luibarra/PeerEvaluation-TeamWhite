@@ -36,16 +36,7 @@ public class PeerEvaluationTest
    System.out.println("all done");
   }
 
-  //need to create dummy table for interaction tests
-  public void response_delete() {
-    pc.nonquery("delete from response"); 
-  }
-
-  public void response_inserts() {
-    String insert = "INSERT INTO Response (evalID,Student1,Student2,Category,Val) VALUES (1906, 45, 46, 'T', 9);"; 
-    pc.nonquery(insert);
-  }
-        
+  //count rows of a given table 
   public int count_rows (String table) {
     ResultSet rs;
     int n = -1;
@@ -72,11 +63,48 @@ public class PeerEvaluationTest
     return n;
   } 
 
+  //functions that do simple deletes and inserts, used in tests 
+  public void dbtest_delete() {
+    pc.nonquery("delete from dbtest"); 
+  }
+
+  public void dbtest_inserts() {
+    String insert = "insert into dbtest (id,word,charid,val) values (2,'gamers','PM', 420);"; 
+    pc.nonquery(insert);
+  }
+        
+  //inserts CSV table into the database, will not reinsert duplicate information
+  public void insertCSV(String[][] table){
+    String evalID,student1,student2,cat,val, insert,countString; 
+
+    for(int i = 1; i < table.length;i++){
+      evalID = table[i][0];
+      student1 = table[i][1];
+      student2 = table[i][2];
+      cat = table[i][3];
+      val = table[i][4];
+
+      countString = "response where (evalID,Student1,Student2,Category,val) = ("+evalID+","+student1+","+student2+",'"+cat+"',"+val+");";
+      insert = "insert into response (evalID,Student1,Student2,Category,val) values ("+evalID+","+student1+","+student2+",'"+cat+"',"+val+");"; 
+      if(count_rows(countString) == 0){
+        pc.nonquery(insert);
+      }
+    }
+  }
+
+
+
+
+  // *************************************************************************
+  //                          Main Test Section 
+  // *************************************************************************
+
+  //database tests
   @Test
   public void check_delete () {
     int n = -1;
-    response_delete();
-    n = count_rows("Response");
+    dbtest_delete();
+    n = count_rows("dbtest");
     assertEquals("Response table should be empty", 0, n);
     System.out.print("delete from code functioning...");
   }
@@ -84,16 +112,28 @@ public class PeerEvaluationTest
   @Test
   public void check_inserts () {
     int n = -1;
-    response_delete();
-    response_inserts();
-    n = count_rows("Response");
+    dbtest_delete();
+    dbtest_inserts();
+    n = count_rows("dbtest");
     assertEquals("should now be 1", 1, n);
     System.out.println("insert from code functioning...");
-  }    
+  }   
+  
+  @Test
+  public void check_CSVinsert () {
+    try{
+      PeerEvaluation PeerEval = new PeerEvaluation();
+      String[][] table = PeerEval.parseCSV("evals.csv");
+      insertCSV(table);
 
-  // *************************************************************************
-  //                          Main Test Section 
-  // *************************************************************************
+      int n = -1; 
+      n = count_rows("response where evalid=2");
+      assertEquals("number of rows should be array length", table.length-1, n);
+    }
+    catch (Exception e){
+      System.out.println("(check_CSVinsert error)"); 
+    }
+  }
 
   //Test that column names are what they should be
   @Test
@@ -472,7 +512,7 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[1][0]) == 1);
+      assertTrue(Integer.parseInt(table[1][0]) == 2);
    }
 
     catch (Exception e) {
@@ -488,7 +528,7 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[2][0]) == 1);
+      assertTrue(Integer.parseInt(table[2][0]) == 2);
    }
 
     catch (Exception e) {
@@ -504,7 +544,7 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[3][0]) == 1);
+      assertTrue(Integer.parseInt(table[3][0]) == 2);
    }
 
     catch (Exception e) {
@@ -520,7 +560,7 @@ public class PeerEvaluationTest
       String[][] table = PeerEval.parseCSV("evals.csv");
 
 
-      assertTrue(Integer.parseInt(table[4][0]) == 1);
+      assertTrue(Integer.parseInt(table[4][0]) == 2);
    }
 
     catch (Exception e) {
@@ -536,7 +576,7 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[1][0]) == 1);
+      assertTrue(Integer.parseInt(table[1][0]) == 2);
       assertTrue(Integer.parseInt(table[1][1]) == 3);
       assertTrue(Integer.parseInt(table[1][2]) == 2);
       assertTrue(table[1][3].equals("C"));
@@ -555,7 +595,7 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[2][0]) == 1);
+      assertTrue(Integer.parseInt(table[2][0]) == 2);
       assertTrue(Integer.parseInt(table[2][1]) == 3);
       assertTrue(Integer.parseInt(table[2][2]) == 2);
       assertTrue(table[2][3].equals("I"));
@@ -574,7 +614,7 @@ public class PeerEvaluationTest
       PeerEvaluation PeerEval = new PeerEvaluation();
       String[][] table = PeerEval.parseCSV("evals.csv");
 
-      assertTrue(Integer.parseInt(table[3][0]) == 1);
+      assertTrue(Integer.parseInt(table[3][0]) == 2);
       assertTrue(Integer.parseInt(table[3][1]) == 3);
       assertTrue(Integer.parseInt(table[3][2]) == 2);
       assertTrue(table[3][3].equals("K"));

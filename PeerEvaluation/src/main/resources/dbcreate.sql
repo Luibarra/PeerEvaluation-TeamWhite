@@ -36,6 +36,13 @@ create database cs375v1;
 -- Selected boolean
 -- );
 
+CREATE TABLE DBTest(
+id int, 
+word varchar(255),
+Charid char(2), 
+val int
+);
+
 CREATE TABLE Response(
 evalID int, 
 Student1 int, 
@@ -63,11 +70,15 @@ CREATE VIEW v_teams AS
 SELECT evalID, teamID, student 
 FROM Teams; 
 
+GRANT ALL ON DBTest TO mrblee; 
 GRANT ALL ON Response TO mrblee; 
 GRANT ALL ON Teams TO mrblee; 
 GRANT ALL ON Students TO mrblee; 
 GRANT ALL ON v_response TO mrblee; 
 GRANT ALL ON v_teams TO mrblee; 
+
+-- Test Insert 
+insert into dbtest (id,word,charid,val) values (1,'gamer','AM', 69);
 
 -- Students Inserts
 insert into students (id,name) values ( 1,'StudentA');
