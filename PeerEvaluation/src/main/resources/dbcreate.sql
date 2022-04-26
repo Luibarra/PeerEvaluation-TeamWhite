@@ -1,40 +1,5 @@
 create database cs375v1; 
 \c cs375v1
--- CREATE TABLE TeamContribution (
--- levelID int, -- Test Test Test
--- Attribute1 varchar(255),
--- Attribute2 varchar(255),
--- Attribute3 varchar(255),
--- Selected boolean
--- );
--- CREATE TABLE Interacting (
--- levelID int,
--- Attribute1 varchar(255),
--- Attribute2 varchar(255),
--- Attribute3 varchar(255),
--- Selected boolean
--- );
--- CREATE TABLE OnTrack (
--- levelID int,
--- Attribute1 varchar(255),
--- Attribute2 varchar(255),
--- Attribute3 varchar(255),
--- Selected boolean
--- );
--- CREATE TABLE Quality (
--- levelID int,
--- Attribute1 varchar(255),
--- Attribute2 varchar(255),
--- Attribute3 varchar(255),
--- Selected boolean
--- );
--- CREATE TABLE Knowledge (
--- levelID int,
--- Attribute1 varchar(255),
--- Attribute2 varchar(255),
--- Attribute3 varchar(255),
--- Selected boolean
--- );
 
 CREATE TABLE DBTest(
 id int, 
