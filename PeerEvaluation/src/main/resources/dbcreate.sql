@@ -1,7 +1,7 @@
 create database cs375v1; 
 \c cs375v1
 -- CREATE TABLE TeamContribution (
--- levelID int,
+-- levelID int, -- Test Test Test
 -- Attribute1 varchar(255),
 -- Attribute2 varchar(255),
 -- Attribute3 varchar(255),
