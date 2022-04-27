@@ -6,6 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.Result;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,140 +36,6 @@ public class PeerEvaluationTest
   public static void teardownThisWall() {
    System.out.println(); 
    System.out.println("all done");
-  }
-
-  //count rows of a given table 
-  public static int count_rows (String table) {
-    ResultSet rs;
-    int n = -1;
-
-    try {
-        rs = pc.query("select count(*) as n from " + table);
-    } 
-    catch (Exception e) {
-        System.out.println("ERROR select count(*) as n: " + e.getMessage());
-        assertTrue(false);
-        return -1;
-    }
-
-    try {
-        rs.next();
-        n = rs.getInt("n");
-    } 
-    catch (Exception e) {
-        System.out.println("ERROR rs.next() and getInt()");
-        assertTrue(false);
-        return -1;
-    }
-
-    return n;
-  } 
-
-  public double TotalAverage(int evalid,int s2,String cat){
-    ResultSet rs;
-    double result = 0; 
-
-    try {
-      rs = pc.query("select AVG(val) as AvgTotal from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"')");
-    } 
-    catch (Exception e) {
-      System.out.println("ERROR select AVG(val) as AvgTotal: " + e.getMessage());
-      assertTrue(false);
-      return -1;
-    }
-
-    try {
-      rs.next();
-      result = rs.getDouble("AvgTotal");
-    } 
-    catch (Exception e) {
-      System.out.println("ERROR rs.next() and getDouble()");
-      assertTrue(false);
-      return -1;
-    }
-
-    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
-  }
-
-  public int countStudents(int evalid){
-    ResultSet rs;
-    int s = -1;
-
-    try {
-        rs = pc.query("select count(distinct student2) as numStudents from response where evalid="+evalid+"");
-    } 
-    catch (Exception e) {
-        System.out.println("ERROR select count(distinct student2) as numStudents: " + e.getMessage());
-        assertTrue(false);
-        return -1;
-    }
-
-    try {
-        rs.next();
-        s = rs.getInt("numStudents");
-    } 
-    catch (Exception e) {
-        System.out.println("ERROR rs.next() and getInt()");
-        assertTrue(false);
-        return -1;
-    }
-
-    return s;
-  }
-
-  public String[][] TotalAveragesArray(int evalid){
-    int numStudents = countStudents(evalid);
-    String[][] AveragesArray = new String[numStudents+1][7];
-    // try{
-      //PeerEvaluation PeerEval = new PeerEvaluation(); 
-      //String[][] table = PeerEval.parseCSV("evals.csv"); 
-      for(int i = 1;i<AveragesArray.length;i++){
-        for(int j = 1;j<7;j++){
-          switch(j){
-            case 2:
-              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "C");
-              break; 
-            case 3:
-              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "I");
-              break;
-            case 4:
-              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "K");
-              break;
-            case 5:
-              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "E");
-              break;
-            case 6:
-              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "H");
-              break; 
-            default:
-              AveragesArray[i][j] = ""+i;
-          }
-        }
-      }
-    // }
-    // catch (Exception e){
-
-    // }
-    for(int i = 1; i < AveragesArray.length;i++){
-        AveragesArray[i][0] = "" + evalid; 
-    }
-    AveragesArray[0][0] = "evalid";
-    AveragesArray[0][1] = "student";
-    AveragesArray[0][2] = "C";
-    AveragesArray[0][3] = "I";
-    AveragesArray[0][4] = "K";
-    AveragesArray[0][5] = "E";
-    AveragesArray[0][6] = "H";
-
-    System.out.println(); 
-    for(int i = 0;i<AveragesArray.length;i++){
-      for(int j=0;j<7;j++){
-        System.out.print("["+AveragesArray[i][j]+"]"); 
-      }
-      System.out.println(); 
-    }
-
-    return AveragesArray;
   }
 
   //functions that do simple deletes and inserts, used in tests 
@@ -199,17 +67,402 @@ public class PeerEvaluationTest
     }
   }
 
+  //count rows of a given table 
+  public static int count_rows (String table) {
+    ResultSet rs;
+    int n = -1;
+
+    try {
+        rs = pc.query("select count(*) as n from " + table);
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR select count(*) as n: " + e.getMessage());
+        assertTrue(false);
+        return -1;
+    }
+
+    try {
+        rs.next();
+        n = rs.getInt("n");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR rs.next() and getInt()");
+        assertTrue(false);
+        return -1;
+    }
+
+    return n;
+  } 
 
 
-  
+  public int countStudents(int evalid){
+    ResultSet rs;
+    int s = -1;
+
+    try {
+        rs = pc.query("select count(distinct student2) as numStudents from response where evalid="+evalid+"");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR select count(distinct student2) as numStudents: " + e.getMessage());
+        assertTrue(false);
+        return -1;
+    }
+
+    try {
+        rs.next();
+        s = rs.getInt("numStudents");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR rs.next() and getInt()");
+        assertTrue(false);
+        return -1;
+    }
+
+    return s;
+  }
+
+
+  public double TotalAverage(int evalid,int s2,String cat){
+    ResultSet rs;
+    double result = 0; 
+
+    try {
+      rs = pc.query("select AVG(val) as AvgTotal from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"')");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR select AVG(val) as AvgTotal: " + e.getMessage());
+      assertTrue(false);
+      return -1;
+    }
+
+    try {
+      rs.next();
+      result = rs.getDouble("AvgTotal");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR rs.next() and getDouble()");
+      assertTrue(false);
+      return -1;
+    }
+
+    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
+  }
+
+
+  public double ExclusiveAverage(int evalid,int s2,String cat){
+    ResultSet rs;
+    double result = 0; 
+
+    try {
+      rs = pc.query("select AVG(val) as AvgEx from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"') and student1!=student2");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR select AVG(val) as AvgEx: " + e.getMessage());
+      assertTrue(false);
+      return -1;
+    }
+
+    try {
+      rs.next();
+      result = rs.getDouble("AvgEx");
+    } 
+    catch (Exception e) {
+      System.out.println("ERRORex rs.next() and getDouble()");
+      assertTrue(false);
+      return -1;
+    }
+
+    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
+  }
+
+
+  public String[][] TotalAveragesArray(int evalid){
+    //int numStudents = countStudents(evalid);
+    int numStudents = count_rows("students");
+    String[][] AveragesArray = new String[numStudents+1][7];
+
+      for(int i = 1;i<AveragesArray.length;i++){
+        for(int j = 1;j<7;j++){
+          switch(j){
+            case 2:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "C");
+              break; 
+            case 3:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "I");
+              break;
+            case 4:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "K");
+              break;
+            case 5:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "E");
+              break;
+            case 6:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "H");
+              break; 
+            default:
+              AveragesArray[i][j] = ""+i;
+          }
+        }
+      }
+
+    for(int i = 1; i < AveragesArray.length;i++){
+        AveragesArray[i][0] = "" + evalid; 
+    }
+    AveragesArray[0][0] = "evalid";
+    AveragesArray[0][1] = "student";
+    AveragesArray[0][2] = "C";
+    AveragesArray[0][3] = "I";
+    AveragesArray[0][4] = "K";
+    AveragesArray[0][5] = "E";
+    AveragesArray[0][6] = "H";
+
+    return AveragesArray;
+  }
+
+ 
+  public String[][] ExAveragesArray(int evalid){
+    //int numStudents = countStudents(evalid);
+    int numStudents = count_rows("students");
+    String[][] AveragesArray = new String[numStudents+1][7];
+
+      for(int i = 1;i<AveragesArray.length;i++){
+        for(int j = 1;j<7;j++){
+          switch(j){
+            case 2:
+              AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "C");
+              break; 
+            case 3:
+              AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "I");
+              break;
+            case 4:
+              AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "K");
+              break;
+            case 5:
+              AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "E");
+              break;
+            case 6:
+              AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "H");
+              break; 
+            default:
+              AveragesArray[i][j] = ""+i;
+          }
+        }
+      }
+
+    for(int i = 1; i < AveragesArray.length;i++){
+        AveragesArray[i][0] = "" + evalid; 
+    }
+    AveragesArray[0][0] = "evalid";
+    AveragesArray[0][1] = "student";
+    AveragesArray[0][2] = "C";
+    AveragesArray[0][3] = "I";
+    AveragesArray[0][4] = "K";
+    AveragesArray[0][5] = "E";
+    AveragesArray[0][6] = "H";
+
+    return AveragesArray;
+  }
+
+  public String[][] StrengthsArray(int evalid){
+    String[][] EA = ExAveragesArray(evalid);
+    String[][] result = new String[EA.length][7];
+    for(int i = 1; i<result.length;i++){
+      result[i][0] = ""+evalid;
+      result[i][1] = ""+i; 
+    }
+
+    for(int i = 1;i<result.length;i++){
+      for(int j =2;j<7;j++){
+        switch(j){
+          case 2:
+            if(Double.parseDouble(EA[i][j]) >= 4){
+              result[i][j] = "Giver";
+            }
+            else if(Double.parseDouble(EA[i][j]) <= 2.5&& Double.parseDouble(EA[i][j]) >= 1.0){
+              result[i][j] = "Withholder";
+            }
+            else {
+              result[i][j] = "Neutral";
+            }
+            break; 
+          case 3:
+            if(Double.parseDouble(EA[i][j]) >= 4){
+              result[i][j] = "Charismatic";
+            }
+            else if(Double.parseDouble(EA[i][j]) <= 2.5&& Double.parseDouble(EA[i][j]) >= 1.0){
+              result[i][j] = "Reclusive";
+            }
+            else {
+              result[i][j] = "Neutral";
+            }
+            break;
+          case 4:
+            if(Double.parseDouble(EA[i][j]) >= 4){
+              result[i][j] = "Focused";
+            }
+            else if(Double.parseDouble(EA[i][j]) <= 2.5&& Double.parseDouble(EA[i][j]) >= 1.0){
+              result[i][j] = "Needs Guidance";
+            }
+            else {
+              result[i][j] = "Neutral";
+            }
+            break;
+          case 5:
+            if(Double.parseDouble(EA[i][j]) >= 4){
+              result[i][j] = "Above and Beyond";
+            }
+            else if(Double.parseDouble(EA[i][j]) <= 2.5&& Double.parseDouble(EA[i][j]) >= 1.0){
+              result[i][j] = "Meets bare minimum";
+            }
+            else {
+              result[i][j] = "Neutral";
+            }
+            break;
+          case 6:
+            if(Double.parseDouble(EA[i][j]) >= 4){
+              result[i][j] = "Swiss Army Knife";
+            }
+            else if(Double.parseDouble(EA[i][j]) <= 2.5 && Double.parseDouble(EA[i][j]) >= 1.0){
+              result[i][j] = "Unqualified";
+            }
+            else {
+              result[i][j] = "Neutral";
+            }
+            break; 
+        }
+      }
+    }
+
+    result[0][0] = "evalid";
+    result[0][1] = "student";
+    result[0][2] = "C";
+    result[0][3] = "I";
+    result[0][4] = "K";
+    result[0][5] = "E";
+    result[0][6] = "H";
+
+    return result;
+  }
+
+  public String[][] NotesArray(int evalid){
+    int numStudents = count_rows("students");
+    String[][] result = new String[numStudents+1][4]; 
+    String[][] TA = TotalAveragesArray(evalid); 
+
+    for(int i =1; i<result.length;i++){
+      result[i][0] = ""+evalid; 
+    }
+
+    double a;
+    for(int i =1; i<result.length;i++){
+      a = 0.0;
+      for(int k = 2;k<7;k++){
+        a += Double.parseDouble(TA[i][k]); 
+      }
+      a /= 5;
+      result[i][1]=""+i;
+      result[i][2]=""+Math.round(a*100.0)/100.0;
+    }
+
+    result[0][0] = "evalid"; 
+    result[0][1] = "student"; 
+    result[0][2] = "OverallAvg"; 
+    result[0][3] = "Note"; 
+
+    return result;
+  }
+
+
   // *************************************************************************
   //                          Main Test Section 
   // *************************************************************************
 
-  //gamer moments
+
+  //Stat Displays
   @Test
   public void TotalAverage(){
+    System.out.println(); 
+    System.out.println("'Total' Averages");
     String[][] TA = TotalAveragesArray(1);
+    String[][] TA2 = TotalAveragesArray(2);
+
+    System.out.println(); 
+    for(int i = 0;i<TA.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+TA[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+    for(int i = 0;i<TA2.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+TA2[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+  }
+
+  @Test
+  public void ExclusiveAverage(){
+    System.out.println(); 
+    System.out.println("'Exclusive' Averages");
+    String[][] EA = ExAveragesArray(1);
+    String[][] EA2 = ExAveragesArray(2);
+
+    System.out.println(); 
+    for(int i = 0;i<EA.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+EA[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+    for(int i = 0;i<EA2.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+EA2[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+  }
+
+  @Test
+  public void StrengthsWeaknesses(){
+    System.out.println(); 
+    System.out.println("Strength and Weaknesses");
+    String[][] SW = StrengthsArray(1);
+    String[][] SW2 = StrengthsArray(2);
+
+    System.out.println(); 
+    for(int i = 0;i<SW.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+SW[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+    for(int i = 0;i<SW2.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+SW2[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+  }
+
+  // @Test
+  // public void Notes(){
+  //   System.out.println(); 
+  //   System.out.println("CATME Notes");
+  //   String[][] Notes = NotesArray(2);
+
+  //   System.out.println(); 
+  //   for(int i = 0;i<Notes.length;i++){
+  //     for(int j=0;j<4;j++){
+  //       System.out.print("["+Notes[i][j]+"]"); 
+  //     }
+  //     System.out.println(); 
+  //   }
+  // }
+
+  @Test
+  public void OverallAverage(){
+    
   }
 
   //database tests
