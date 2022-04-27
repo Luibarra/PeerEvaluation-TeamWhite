@@ -1,0 +1,8 @@
+Thank you for looking at our SE2 Final Project. 
+
+There is one note that I must tell you. 
+In the case that you run into an error in which maven will refuse to complile, 
+the issue is most likely in the pom.xml file under "maven.compiler.source" and "maven.compiler.target".
+
+These were originally set to 11, i believe but would not work on my personal machine so I was forced to change them,
+please try setting those values to 11 or whichever version works for your machine if the error arises. 
