@@ -176,6 +176,33 @@ public class PeerEvaluationTest
   }
 
 
+  public double SelfRate(int evalid,int s2,String cat){
+    ResultSet rs;
+    double result = 0; 
+
+    try {
+      rs = pc.query("select AVG(val) as selfRate from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"') and student1=student2");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR select AVG(val) as selfRate: " + e.getMessage());
+      assertTrue(false);
+      return -1;
+    }
+
+    try {
+      rs.next();
+      result = rs.getDouble("selfRate");
+    } 
+    catch (Exception e) {
+      System.out.println("ERRORself rs.next() and getDouble()");
+      assertTrue(false);
+      return -1;
+    }
+
+    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
+  }
+
+
   public String[][] TotalAveragesArray(int evalid){
     //int numStudents = countStudents(evalid);
     int numStudents = count_rows("students");
@@ -242,6 +269,50 @@ public class PeerEvaluationTest
               break;
             case 6:
               AveragesArray[i][j] = ""+ExclusiveAverage(evalid, i, "H");
+              break; 
+            default:
+              AveragesArray[i][j] = ""+i;
+          }
+        }
+      }
+
+    for(int i = 1; i < AveragesArray.length;i++){
+        AveragesArray[i][0] = "" + evalid; 
+    }
+    AveragesArray[0][0] = "evalid";
+    AveragesArray[0][1] = "student";
+    AveragesArray[0][2] = "C";
+    AveragesArray[0][3] = "I";
+    AveragesArray[0][4] = "K";
+    AveragesArray[0][5] = "E";
+    AveragesArray[0][6] = "H";
+
+    return AveragesArray;
+  }
+
+
+  public String[][] SelfRates(int evalid){
+    //int numStudents = countStudents(evalid);
+    int numStudents = count_rows("students");
+    String[][] AveragesArray = new String[numStudents+1][7];
+
+      for(int i = 1;i<AveragesArray.length;i++){
+        for(int j = 1;j<7;j++){
+          switch(j){
+            case 2:
+              AveragesArray[i][j] = ""+SelfRate(evalid, i, "C");
+              break; 
+            case 3:
+              AveragesArray[i][j] = ""+SelfRate(evalid, i, "I");
+              break;
+            case 4:
+              AveragesArray[i][j] = ""+SelfRate(evalid, i, "K");
+              break;
+            case 5:
+              AveragesArray[i][j] = ""+SelfRate(evalid, i, "E");
+              break;
+            case 6:
+              AveragesArray[i][j] = ""+SelfRate(evalid, i, "H");
               break; 
             default:
               AveragesArray[i][j] = ""+i;
@@ -348,26 +419,81 @@ public class PeerEvaluationTest
     int numStudents = count_rows("students");
     String[][] result = new String[numStudents+1][4]; 
     String[][] TA = TotalAveragesArray(evalid); 
+    String[][] EA = ExAveragesArray(evalid); 
+    String[][] SR = SelfRates(evalid); 
+    String[] SelfAvg = new String[numStudents+1];
+    String[] ExAvg = new String[numStudents+1];
 
     for(int i =1; i<result.length;i++){
       result[i][0] = ""+evalid; 
     }
 
     double a;
+    double b;
+    double c;
     for(int i =1; i<result.length;i++){
       a = 0.0;
+      b = 0.0;
+      c = 0.0;
       for(int k = 2;k<7;k++){
         a += Double.parseDouble(TA[i][k]); 
+        b += Double.parseDouble(SR[i][k]); 
+        c += Double.parseDouble(EA[i][k]); 
       }
       a /= 5;
+      b /= 5; 
+      c /= 5; 
       result[i][1]=""+i;
       result[i][2]=""+Math.round(a*100.0)/100.0;
+      SelfAvg[i] = ""+Math.round(b*100.0)/100.0;
+      ExAvg[i] = ""+Math.round(c*100.0)/100.0;
     }
 
     result[0][0] = "evalid"; 
     result[0][1] = "student"; 
     result[0][2] = "OverallAvg"; 
     result[0][3] = "Note"; 
+
+    //for loop checks for 'exceptional conditions'
+    for(int i = 1; i<result.length;i++){
+      double oavg = Double.parseDouble(result[i][2]); 
+      double savg = Double.parseDouble(SelfAvg[i]); 
+      double eavg = Double.parseDouble(ExAvg[i]); 
+      double minus;
+      if(eavg < 2.5 && eavg >= 1.0){
+        result[i][3] = "Low Performer"; 
+      }
+      else if(eavg < 3.0 && savg > eavg){
+        minus = savg - eavg; 
+        if(minus >= 1){
+          result[i][3] = "Overconfident";
+        }
+        else{
+          result[i][3] = "N/A";
+        }
+      }
+      else if(eavg > 3 && savg < eavg){
+        minus = eavg - savg; 
+        if(minus >= 1){
+          result[i][3] = "Underconfident";
+        }
+        else{
+          result[i][3] = "N/A";
+        } 
+      }
+      else if (eavg > 3.5 && eavg > oavg){
+        minus = eavg - savg; 
+        if(minus >= 0.5){
+          result[i][3] = "High Performer";
+        }
+        else{
+          result[i][3] = "N/A";
+        }
+      }
+      else{
+        result[i][3] = "N/A";
+      }
+    }
 
     return result;
   }
@@ -445,25 +571,49 @@ public class PeerEvaluationTest
     }
   }
 
+  @Test
+  public void Notes(){
+    System.out.println(); 
+    System.out.println("Exceptional Conditions");
+    String[][] Notes = NotesArray(1);
+    String[][] Notes2 = NotesArray(2);
+
+    System.out.println(); 
+    for(int i = 0;i<Notes.length;i++){
+      for(int j=0;j<4;j++){
+        System.out.print("["+Notes[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+    for(int i = 0;i<Notes2.length;i++){
+      for(int j=0;j<4;j++){
+        System.out.print("["+Notes2[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+  }
+
   // @Test
-  // public void Notes(){
+  // public void SelfRates(){
   //   System.out.println(); 
-  //   System.out.println("CATME Notes");
-  //   String[][] Notes = NotesArray(2);
+  //   System.out.println("Self Ratings");
+  //   String[][] SR = SelfRates(1);
+  //   String[][] SR2 = SelfRates(2);
 
   //   System.out.println(); 
-  //   for(int i = 0;i<Notes.length;i++){
-  //     for(int j=0;j<4;j++){
-  //       System.out.print("["+Notes[i][j]+"]"); 
+  //   for(int i = 0;i<SR.length;i++){
+  //     for(int j=0;j<7;j++){
+  //       System.out.print("["+SR[i][j]+"]"); 
+  //     }
+  //     System.out.println(); 
+  //   }
+  //   for(int i = 0;i<SR2.length;i++){
+  //     for(int j=0;j<7;j++){
+  //       System.out.print("["+SR2[i][j]+"]"); 
   //     }
   //     System.out.println(); 
   //   }
   // }
-
-  @Test
-  public void OverallAverage(){
-    
-  }
 
   //database tests
   @Test
