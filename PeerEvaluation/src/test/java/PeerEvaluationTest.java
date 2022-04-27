@@ -118,11 +118,53 @@ public class PeerEvaluationTest
   public String[][] TotalAveragesArray(int evalid){
     int numStudents = countStudents(evalid);
     String[][] AveragesArray = new String[numStudents+1][7];
-
-    for(int i = 0; i < AveragesArray.length;i++){
-      for(int j = 0; j < 7;j++){
-        
+    // try{
+      //PeerEvaluation PeerEval = new PeerEvaluation(); 
+      //String[][] table = PeerEval.parseCSV("evals.csv"); 
+      for(int i = 1;i<AveragesArray.length;i++){
+        for(int j = 1;j<7;j++){
+          switch(j){
+            case 2:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "C");
+              break; 
+            case 3:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "I");
+              break;
+            case 4:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "K");
+              break;
+            case 5:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "E");
+              break;
+            case 6:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "H");
+              break; 
+            default:
+              AveragesArray[i][j] = ""+i;
+          }
+        }
       }
+    // }
+    // catch (Exception e){
+
+    // }
+    for(int i = 1; i < AveragesArray.length;i++){
+        AveragesArray[i][0] = "" + evalid; 
+    }
+    AveragesArray[0][0] = "evalid";
+    AveragesArray[0][1] = "student";
+    AveragesArray[0][2] = "C";
+    AveragesArray[0][3] = "I";
+    AveragesArray[0][4] = "K";
+    AveragesArray[0][5] = "E";
+    AveragesArray[0][6] = "H";
+
+    System.out.println(); 
+    for(int i = 0;i<AveragesArray.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+AveragesArray[i][j]+"]"); 
+      }
+      System.out.println(); 
     }
 
     return AveragesArray;
@@ -167,7 +209,7 @@ public class PeerEvaluationTest
   //gamer moments
   @Test
   public void TotalAverage(){
-    //System.out.println();
+    String[][] TA = TotalAveragesArray(1);
   }
 
   //database tests
