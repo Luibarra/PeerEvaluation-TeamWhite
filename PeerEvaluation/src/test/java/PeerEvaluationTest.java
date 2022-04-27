@@ -14,14 +14,11 @@ import java.sql.ResultSet;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
-/**
- * 
- */
-
 public class PeerEvaluationTest
 {
   public static PeerEvaluation pc;
   public static Connection c;
+  public static String[][] totalAverages = new String[10000][7]; 
 
   @BeforeClass
   public static void setUpDB() throws Exception {
@@ -66,6 +63,113 @@ public class PeerEvaluationTest
     return n;
   } 
 
+  public double TotalAverage(int evalid,int s2,String cat){
+    ResultSet rs;
+    double result = 0; 
+
+    try {
+      rs = pc.query("select AVG(val) as AvgTotal from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"')");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR select AVG(val) as AvgTotal: " + e.getMessage());
+      assertTrue(false);
+      return -1;
+    }
+
+    try {
+      rs.next();
+      result = rs.getDouble("AvgTotal");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR rs.next() and getDouble()");
+      assertTrue(false);
+      return -1;
+    }
+
+    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
+  }
+
+  public int countStudents(int evalid){
+    ResultSet rs;
+    int s = -1;
+
+    try {
+        rs = pc.query("select count(distinct student2) as numStudents from response where evalid="+evalid+"");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR select count(distinct student2) as numStudents: " + e.getMessage());
+        assertTrue(false);
+        return -1;
+    }
+
+    try {
+        rs.next();
+        s = rs.getInt("numStudents");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR rs.next() and getInt()");
+        assertTrue(false);
+        return -1;
+    }
+
+    return s;
+  }
+
+  public String[][] TotalAveragesArray(int evalid){
+    int numStudents = countStudents(evalid);
+    String[][] AveragesArray = new String[numStudents+1][7];
+    // try{
+      //PeerEvaluation PeerEval = new PeerEvaluation(); 
+      //String[][] table = PeerEval.parseCSV("evals.csv"); 
+      for(int i = 1;i<AveragesArray.length;i++){
+        for(int j = 1;j<7;j++){
+          switch(j){
+            case 2:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "C");
+              break; 
+            case 3:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "I");
+              break;
+            case 4:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "K");
+              break;
+            case 5:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "E");
+              break;
+            case 6:
+              AveragesArray[i][j] = ""+TotalAverage(evalid, i, "H");
+              break; 
+            default:
+              AveragesArray[i][j] = ""+i;
+          }
+        }
+      }
+    // }
+    // catch (Exception e){
+
+    // }
+    for(int i = 1; i < AveragesArray.length;i++){
+        AveragesArray[i][0] = "" + evalid; 
+    }
+    AveragesArray[0][0] = "evalid";
+    AveragesArray[0][1] = "student";
+    AveragesArray[0][2] = "C";
+    AveragesArray[0][3] = "I";
+    AveragesArray[0][4] = "K";
+    AveragesArray[0][5] = "E";
+    AveragesArray[0][6] = "H";
+
+    System.out.println(); 
+    for(int i = 0;i<AveragesArray.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+AveragesArray[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+
+    return AveragesArray;
+  }
+
   //functions that do simple deletes and inserts, used in tests 
   public void dbtest_delete() {
     pc.nonquery("delete from dbtest"); 
@@ -97,10 +201,16 @@ public class PeerEvaluationTest
 
 
 
-
+  
   // *************************************************************************
   //                          Main Test Section 
   // *************************************************************************
+
+  //gamer moments
+  @Test
+  public void TotalAverage(){
+    String[][] TA = TotalAveragesArray(1);
+  }
 
   //database tests
   @Test
