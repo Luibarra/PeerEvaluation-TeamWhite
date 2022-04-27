@@ -593,27 +593,27 @@ public class PeerEvaluationTest
     }
   }
 
-  // @Test
-  // public void SelfRates(){
-  //   System.out.println(); 
-  //   System.out.println("Self Ratings");
-  //   String[][] SR = SelfRates(1);
-  //   String[][] SR2 = SelfRates(2);
+  @Test
+  public void SelfRates(){
+    System.out.println(); 
+    System.out.println("Self Ratings");
+    String[][] SR = SelfRates(1);
+    String[][] SR2 = SelfRates(2);
 
-  //   System.out.println(); 
-  //   for(int i = 0;i<SR.length;i++){
-  //     for(int j=0;j<7;j++){
-  //       System.out.print("["+SR[i][j]+"]"); 
-  //     }
-  //     System.out.println(); 
-  //   }
-  //   for(int i = 0;i<SR2.length;i++){
-  //     for(int j=0;j<7;j++){
-  //       System.out.print("["+SR2[i][j]+"]"); 
-  //     }
-  //     System.out.println(); 
-  //   }
-  // }
+    System.out.println(); 
+    for(int i = 0;i<SR.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+SR[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+    for(int i = 0;i<SR2.length;i++){
+      for(int j=0;j<7;j++){
+        System.out.print("["+SR2[i][j]+"]"); 
+      }
+      System.out.println(); 
+    }
+  }
 
   //database tests
   @Test
