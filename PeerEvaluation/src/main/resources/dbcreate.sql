@@ -1,3 +1,4 @@
+drop database cs375v1;
 create database cs375v1; 
 \c cs375v1
 -- CREATE TABLE TeamContribution (
@@ -57,9 +58,39 @@ teamID int,
 student int
 );
 
+
+
 CREATE TABLE Students(
 id int, 
 name char(50)
+);
+
+CREATE TABLE course (
+id int,
+abbrev text,
+title text,
+primary key (id)
+);
+
+CREATE TABLE section (
+id int,
+course_id int,
+title text,
+start date,
+primary key (id)
+);
+
+CREATE TABLE eval (
+id int,
+title text,
+end_date date,
+primary key( id )
+);
+
+CREATE TABLE eval_section (
+eval_id int,
+section_id int,
+primary key (eval_id, section_id)
 );
 
 CREATE VIEW v_response AS 
@@ -70,10 +101,15 @@ CREATE VIEW v_teams AS
 SELECT evalID, teamID, student 
 FROM Teams; 
 
+-- Grant Statements
 GRANT ALL ON DBTest TO mrblee; 
 GRANT ALL ON Response TO mrblee; 
 GRANT ALL ON Teams TO mrblee; 
 GRANT ALL ON Students TO mrblee; 
+GRANT ALL ON course TO mrblee
+GRANT ALL ON section TO mrblee
+GRANT ALL ON eval TO mrblee
+GRANT ALL ON eval_section TO mrblee
 GRANT ALL ON v_response TO mrblee; 
 GRANT ALL ON v_teams TO mrblee; 
 
