@@ -1,3 +1,4 @@
+drop database cs375v1;
 create database cs375v1; 
 \c cs375v1
 
@@ -27,6 +28,34 @@ id int,
 name char(50)
 );
 
+CREATE TABLE course (
+id int,
+abbrev text,
+title text,
+primary key (id)
+);
+
+CREATE TABLE section (
+id int,
+course_id int,
+title text,
+start date,
+primary key (id)
+);
+
+CREATE TABLE eval (
+id int,
+title text,
+end_date date,
+primary key( id )
+);
+
+CREATE TABLE eval_section (
+eval_id int,
+section_id int,
+primary key (eval_id, section_id)
+);
+
 CREATE VIEW v_response AS 
 SELECT evalID, Student1, Student2, Category, val
 FROM Response; 
@@ -35,10 +64,15 @@ CREATE VIEW v_teams AS
 SELECT evalID, teamID, student 
 FROM Teams; 
 
+-- Grant Statements
 GRANT ALL ON DBTest TO mrblee; 
 GRANT ALL ON Response TO mrblee; 
 GRANT ALL ON Teams TO mrblee; 
 GRANT ALL ON Students TO mrblee; 
+GRANT ALL ON course TO mrblee;
+GRANT ALL ON section TO mrblee;
+GRANT ALL ON eval TO mrblee;
+GRANT ALL ON eval_section TO mrblee;
 GRANT ALL ON v_response TO mrblee; 
 GRANT ALL ON v_teams TO mrblee; 
 
@@ -359,6 +393,42 @@ insert into Response (evalID,student1,student2,category,val) values (1,13,12,'H'
 insert into Response (evalID,student1,student2,category,val) values (1,15,13,'H',4);
 insert into Response (evalID,student1,student2,category,val) values (1,15,14,'H',4);
 insert into Response (evalID,student1,student2,category,val) values (1,15,15,'H',4);
+
+--Insertions into course table
+insert into course (id, abbrev, title) values (123, BIBL, Bible);
+insert into course (id, abbrev, title) values (234, ACCT, Accounting);
+insert into course (id, abbrev, title) values (345, FIN, Finance);
+insert into course (id, abbrev, title) values (456, BIBT, BibleTheory);
+insert into course (id, abbrev, title) values (567, PHYS, Physiology);
+insert into course (id, abbrev, title) values (678, DET, Gaming);
+insert into course (id, abbrev, title) values (789, CS, CompSci);
+
+--Insertions into section table
+insert into section (id, course_id, title, start) values (11, 123, BibleClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (12, 234, AccountingClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (1, 345, FinanceClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (2, 456, BibleTheoryClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (3, 567, PhysiologyClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (4, 678, GamingClass, 2008-11-11);
+insert into section (id, course_id, title, start) values (5, 789, CompSciClass, 2008-11-11);
+
+--Insertions into eval table
+insert into eval (id, title, end_date) values (1, first, 2008-11-20);
+insert into eval (id, title, end_date) values (2, second, 2008-11-20);
+insert into eval (id, title, end_date) values (3, third, 2008-11-20);
+insert into eval (id, title, end_date) values (4, fourth, 2008-11-20);
+insert into eval (id, title, end_date) values (5, fifth, 2008-11-20);
+insert into eval (id, title, end_date) values (6, sixth, 2008-11-20);
+insert into eval (id, title, end_date) values (7, seventh, 2008-11-20);
+
+--Insertions into eval_section table
+insert into eval (eval_id, section_id) values (1, 11);
+insert into eval (eval_id, section_id) values (2, 12);
+insert into eval (eval_id, section_id) values (3, 1);
+insert into eval (eval_id, section_id) values (4, 2);
+insert into eval (eval_id, section_id) values (5, 3);
+insert into eval (eval_id, section_id) values (6, 4);
+insert into eval (eval_id, section_id) values (7, 5);
 
 -- INSERT INTO TeamContribution (levelID, Attribute1, Attribute2, Attribute3, Selected)
 -- VALUES ('1', 'Does more or higher-quality work than expected', ' Makes important contributions that improve the teams work.', 'Helps teammates who are having difficulty completing their work.', '0');
