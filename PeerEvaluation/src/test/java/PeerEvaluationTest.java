@@ -14,14 +14,11 @@ import java.sql.ResultSet;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
-/**
- * 
- */
-
 public class PeerEvaluationTest
 {
   public static PeerEvaluation pc;
   public static Connection c;
+  public static String[][] totalAverages = new String[10000][7]; 
 
   @BeforeClass
   public static void setUpDB() throws Exception {
@@ -66,6 +63,71 @@ public class PeerEvaluationTest
     return n;
   } 
 
+  public double TotalAverage(int evalid,int s2,String cat){
+    ResultSet rs;
+    double result = 0; 
+
+    try {
+      rs = pc.query("select AVG(val) as AvgTotal from response where (evalid,student2,category) = ("+evalid+","+s2+",'"+cat+"')");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR select AVG(val) as AvgTotal: " + e.getMessage());
+      assertTrue(false);
+      return -1;
+    }
+
+    try {
+      rs.next();
+      result = rs.getDouble("AvgTotal");
+    } 
+    catch (Exception e) {
+      System.out.println("ERROR rs.next() and getDouble()");
+      assertTrue(false);
+      return -1;
+    }
+
+    return Math.round(result*100.0)/100.0; //rounds double to two decimal places 
+  }
+
+  public int countStudents(int evalid){
+    ResultSet rs;
+    int s = -1;
+
+    try {
+        rs = pc.query("select count(distinct student2) as numStudents from response where evalid="+evalid+"");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR select count(distinct student2) as numStudents: " + e.getMessage());
+        assertTrue(false);
+        return -1;
+    }
+
+    try {
+        rs.next();
+        s = rs.getInt("numStudents");
+    } 
+    catch (Exception e) {
+        System.out.println("ERROR rs.next() and getInt()");
+        assertTrue(false);
+        return -1;
+    }
+
+    return s;
+  }
+
+  public String[][] TotalAveragesArray(int evalid){
+    int numStudents = countStudents(evalid);
+    String[][] AveragesArray = new String[numStudents+1][7];
+
+    for(int i = 0; i < AveragesArray.length;i++){
+      for(int j = 0; j < 7;j++){
+        
+      }
+    }
+
+    return AveragesArray;
+  }
+
   //functions that do simple deletes and inserts, used in tests 
   public void dbtest_delete() {
     pc.nonquery("delete from dbtest"); 
@@ -97,10 +159,16 @@ public class PeerEvaluationTest
 
 
 
-  //test branch
+  
   // *************************************************************************
   //                          Main Test Section 
   // *************************************************************************
+
+  //gamer moments
+  @Test
+  public void TotalAverage(){
+    //System.out.println();
+  }
 
   //database tests
   @Test
