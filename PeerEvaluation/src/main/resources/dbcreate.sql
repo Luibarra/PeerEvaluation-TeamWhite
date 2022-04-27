@@ -58,8 +58,6 @@ teamID int,
 student int
 );
 
-
-
 CREATE TABLE Students(
 id int, 
 name char(50)
@@ -106,10 +104,10 @@ GRANT ALL ON DBTest TO mrblee;
 GRANT ALL ON Response TO mrblee; 
 GRANT ALL ON Teams TO mrblee; 
 GRANT ALL ON Students TO mrblee; 
-GRANT ALL ON course TO mrblee
-GRANT ALL ON section TO mrblee
-GRANT ALL ON eval TO mrblee
-GRANT ALL ON eval_section TO mrblee
+GRANT ALL ON course TO mrblee;
+GRANT ALL ON section TO mrblee;
+GRANT ALL ON eval TO mrblee;
+GRANT ALL ON eval_section TO mrblee;
 GRANT ALL ON v_response TO mrblee; 
 GRANT ALL ON v_teams TO mrblee; 
 
